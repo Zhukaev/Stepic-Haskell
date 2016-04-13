@@ -41,7 +41,7 @@ factorial 1 fact = fact
 factorial 0 fact = 1
 factorial n fact = factorial (n - 1) (fact * n)
 
---4.5.6
+--4.5.5
 
 data Tree a = Leaf a | Node (Tree a) (Tree a)
 
@@ -52,3 +52,19 @@ height (Node a b) = 1 + max (height a) (height b)
 size :: Tree a -> Int
 size (Leaf a) = 1
 size (Node a b) = 1 + size a + size b
+
+--4.5.6
+
+data Tree a = Leaf a | Node (Tree a) (Tree a)
+
+avg :: Tree Int -> Int
+avg t =
+    let (c,s) = go t
+    in s `div` c
+  where
+    go :: Tree Int -> (Int,Int)
+    go (Leaf x) = (1, x)
+    go (Node left right) = let
+        (lc, ls) = go left
+        (rc, rs) = go right
+      in (lc + rc, ls + rs)
